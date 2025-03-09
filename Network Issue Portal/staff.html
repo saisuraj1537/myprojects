@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
+    <title>Login & Registration</title>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      /* Resetting default margin and padding */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* Body Styling */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+
+      /* Form Box Styling */
+      .form-box {
+        max-width: 500px;
+        background-color: white;
+        margin: 30px auto;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .container header {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .input-box {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .input-box1 {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 10px;
+        padding-left: 40px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      .input-box1 i {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+      }
+
+      /* Two Columns Styling */
+      .two-col {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .two-col .one label,
+      .two-col .two label {
+        font-size: 14px;
+        color: #333;
+      }
+
+      .two-col .two label a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .two-col .two label a:hover {
+        text-decoration: underline;
+      }
+
+      .submit {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .submit:hover {
+        background-color: #0056b3;
+      }
+
+      .bottom-text {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #333;
+        text-align: center;
+      }
+
+      .bottom-text a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .bottom-text a:hover {
+        text-decoration: underline;
+      }
+
+      /* Main Container */
+      .main-container {
+        text-align: center;
+        margin-top: 50px;
+      }
+
+      .college-heading {
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .logo {
+        max-width: 150px;
+        margin-bottom: 30px;
+      }
+
+      .raise-complaint-btn {
+        padding: 15px 30px;
+        font-size: 18px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .raise-complaint-btn:hover {
+        background-color: #0056b3;
+      }
+
+      .para {
+        color: #007bff;
+      }
+
+      /* Complaint Form Styling */
+      #complaint-page {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: left;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      #complaint-page h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      #complaint-page label {
+        font-size: 16px;
+        color: #333;
+      }
+
+      #complaint-page input,
+      #complaint-page select,
+      #complaint-page textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      .complaint {
+        background-color: #f9f9f9; /* Light background for each complaint */
+        border: 1px solid #ddd; /* Subtle border around each complaint */
+        border-radius: 8px; /* Rounded corners for a smooth look */
+        padding: 15px; /* Spacing inside the complaint container */
+        margin-bottom: 20px; /* Space between each complaint */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+      }
+
+      /* Styling the complaint details */
+      .complaint p {
+        margin: 8px 0; /* Space between each detail */
+        font-size: 1em; /* Consistent font size */
+        color: #333; /* Darker color for text */
+      }
+
+      .complaint p strong {
+        color: #007bff; /* Different color for labels to make them stand out */
+      }
+
+      /* Styling for the status */
+      .in-progress {
+        color: #ffc107; /* Yellow color for in-progress status */
+        font-weight: bold; /* Make it bold */
+      }
+
+      .finished {
+        color: #28a745; /* Green color for finished status */
+        font-weight: bold; /* Make it bold */
+      }
+
+      /* Styling for the notice text */
+      .notictext {
+        margin-top: 10px;
+        font-size: 1.1em; /* Slightly larger text */
+        color: #d9534f; /* Red color to draw attention to the notice */
+        font-weight: bold; /* Make it stand out */
+      }
+
+      /* Feedback container styling */
+      .feedback-container {
+        margin-top: 15px; /* Space above feedback section */
+        text-align: center; /* Center the feedback buttons */
+      }
+
+      .feedback-container p {
+        margin-bottom: 10px; /* Space below the feedback question */
+        font-size: 1.1em; /* Slightly larger text */
+        color: #555; /* Softer color for the question text */
+      }
+
+      /* Feedback button styling */
+      .feedback-container button {
+        margin: 5px 10px; /* Space around buttons */
+        padding: 10px 20px; /* Comfortable padding inside buttons */
+        font-size: 1em; /* Consistent font size */
+        border: none; /* Remove default border */
+        border-radius: 5px; /* Rounded corners for buttons */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s; /* Smooth color transition on hover */
+      }
+
+      .feedback-container .yes-button {
+        background-color: #28a745; /* Green for Yes */
+        color: #fff; /* White text */
+      }
+
+      .feedback-container .no-button {
+        background-color: #dc3545; /* Red for No */
+        color: #fff; /* White text */
+      }
+
+      .feedback-container button:hover {
+        opacity: 0.9; /* Slightly dim the button on hover */
+      }
+
+      #registerMessage {
+        color: #28a745;
+      }
+
+      .footer-para {
+        font-size: 10px;
+      }
+
+      @media screen and (max-width: 786px) {
+        .form-box {
+          padding: 20px;
+        }
+
+        .raise-complaint-btn {
+          font-size: 16px;
+          padding: 10px 20px;
+        }
+
+        #complaint-page {
+          padding: 20px;
+        }
+
+        #complaint-page h2 {
+          font-size: 22px;
+        }
+
+        #complaint-page label {
+          font-size: 14px;
+        }
+
+        .feedback-buttons p {
+          font-size: 14px;
+        }
+      }
+      .history-container {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+      }
+      .header {
+        text-align: center;
+        font-size: 2em;
+        color: #333;
+      }
+      .data-block {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .data-block p {
+        margin-bottom: 11px;
+        font-size: 1em;
+      }
+
+      .data-block strong {
+        color: #444;
+      }
+      .empty-message {
+        text-align: center;
+        color: #888;
+        font-style: italic;
+      }
+
+      .forget_btn {
+        background-color: transparent;
+        border: none;
+        color: #0056b3;
+      }
+
+      /* div {
+        border: 2px solid black;
+      } */
+
+      /* Styling the complaint container */
+    </style>
+  </head>
+  <body>
+    <h1 class="text-center bg-dark text-light">VIT NETWORK ISSUE PORTAL</h1>
+
+    <div class="form-box" id="formContainer">
+      <!-- Login Form -->
+      <div class="login-container container" id="loginContainer">
+        <header>Login</header>
+        <div class="input-box1">
+          <input
+            type="text"
+            id="loginusername"
+            class="input-field"
+            placeholder="username"
+          />
+          <i class="bx bx-user"></i>
+        </div>
+        <!-- <div class="input-box">
+          <input
+            type="password"
+            id="loginPassword"
+            class="input-field"
+            placeholder="Password"
+          />
+          <i class="bx bx-lock-alt"></i>
+        </div> -->
+
+        <div class="input-box" style="position: relative; width: 100%">
+          <!-- Lock Icon -->
+          <i
+            class="bx bx-lock-alt"
+            style="
+              position: absolute;
+              left: 10px;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 20px;
+            "
+          >
+          </i>
+
+          <!-- Input Field -->
+          <input
+            type="password"
+            id="loginPassword"
+            class="input-field"
+            placeholder="Password"
+            style="
+              width: 100%;
+              padding-left: 40px;
+              padding-right: 40px;
+              font-size: 16px;
+              height: 40px;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+            "
+          />
+
+          <!-- Eye Icon -->
+          <i
+            class="bx bx-show"
+            id="togglePassword"
+            style="
+              position: absolute;
+              right: 10px;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 20px;
+              cursor: pointer;
+            "
+          >
+          </i>
+        </div>
+
+        <div class="d-flex flex-row justify-content-end mt-0 mb-2">
+          <button onclick="forget()" class="forget_btn">
+            Forgot Password ?
+          </button>
+        </div>
+
+        <div class="input-box">
+          <input type="submit" class="submit" value="Login" onclick="login()" />
+        </div>
+
+        <div class="bottom-text">
+          Don't have an account?
+          <a href="#" onclick="showRegister()">Sign Up</a>
+        </div>
+        <div id="loginMessage"></div>
+      </div>
+
+      <!-- Registration Form -->
+      <div class="register-container container" id="registerContainer">
+        <header>Sign Up</header>
+        <div class="input-box1">
+          <input
+            type="text"
+            id="registerusername"
+            class="input-field"
+            placeholder="username"
+          />
+          <i class="bx bx-user"></i>
+        </div>
+        <div>
+          <div class="input-box1">
+            <input
+              type="text"
+              id="email"
+              class="input-field"
+              placeholder="Email"
+            />
+            <i class="bx bxl-gmail"></i>
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary mb-3 w-100"
+            onclick="otpSender()"
+          >
+            Sent OTP
+          </button>
+        </div>
+        <div>
+          <div class="input-box1">
+            <input
+              type="text"
+              id="registeremailotp"
+              class="input-field"
+              placeholder="Enter OTP"
+            />
+            <i class="bx bx-message"></i>
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary w-100"
+            onclick="registeremailotpVerify()"
+          >
+            Verify OTP
+          </button>
+        </div>
+        <p id="registerOtpErrText"></p>
+        <!-- <div class="input-box1">
+          <input
+            type="password"
+            id="registerPassword"
+            class="input-field"
+            placeholder="Password"
+          />
+          <i class="bx bx-lock-alt"></i>
+        </div> -->
+        <div class="input-box" style="position: relative; width: 100%">
+          <!-- Lock Icon -->
+          <i
+            class="bx bx-lock-alt"
+            style="
+              position: absolute;
+              left: 10px;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 20px;
+            "
+          >
+          </i>
+
+          <!-- Input Field -->
+          <input
+            type="password"
+            id="registerPassword"
+            class="input-field"
+            placeholder="Password"
+            style="
+              width: 100%;
+              padding-left: 40px;
+              padding-right: 40px;
+              font-size: 16px;
+              height: 40px;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+            "
+          />
+
+          <!-- Eye Icon -->
+          <i
+            class="bx bx-show"
+            id="togglePassword1"
+            style="
+              position: absolute;
+              right: 10px;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 20px;
+              cursor: pointer;
+            "
+          >
+          </i>
+        </div>
+        <div class="input-box1">
+          <input
+            type="number"
+            id="registerNumber"
+            class="input-field"
+            placeholder="Phone Number"
+          />
+          <i class="bx bx-phone"></i>
+        </div>
+
+        <div class="input-box">
+          <input
+            type="submit"
+            class="submit"
+            value="Register"
+            onclick="signup()"
+          />
+        </div>
+        <div class="bottom-text">
+          Have an account? <a href="#" onclick="showLogin()">Login</a>
+        </div>
+        <div id="registerMessage"></div>
+      </div>
+
+      <div id="forget_container" class="input-box">
+        <div class="input-box1">
+          <input
+            type="text"
+            id="frInputusername"
+            class="input-field"
+            placeholder="Username"
+          />
+          <i class="bx bx-user"></i>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary mb-3 w-100"
+          onclick="forgetOtpSender()"
+        >
+          Sent OTP
+        </button>
+
+        <p>Please Check your Registered mail and Enter the otp</p>
+        <div class="input-box1">
+          <input
+            type="number"
+            id="otpInput"
+            class="input-field"
+            placeholder="Enter OTP"
+          />
+          <i class="bx bx-message" id="frgIcon"></i>
+        </div>
+
+        <p id="otpErrTxt"></p>
+
+        <button
+          type="button"
+          id="verifyOtpBtn"
+          class="btn btn-primary mb-3 w-100"
+          onclick="verifyOtp()"
+        >
+          Verify
+        </button>
+
+        <div class="input-box1" id="frgPass">
+          <input
+            type="password"
+            id="newPass"
+            class="input-field"
+            placeholder="Enter New Password"
+          />
+          <i class="bx bx-lock-alt"></i>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary mb-3 w-100"
+          onclick="newPass()"
+          id="frgPassBtn"
+        >
+          Set Password
+        </button>
+
+        <!-- <input type="text" id="frInputusername" class="input-field" /> -->
+      </div>
+    </div>
+
+    <div class="main-container container" id="mainContainer">
+      <div id="logoCard">
+        <h1 class="college-heading">VISHNU INSTITUTE OF TCEHNOLOGY</h1>
+        <img
+          src="https://res.cloudinary.com/dnllne8qr/image/upload/v1724261998/newlogo_nz151u.bmp"
+          alt="vishnu Logo"
+          class="logo"
+        />
+
+        <!-- First Page: Home -->
+        <div class="container" id="home-page">
+          <button
+            class="btn btn-primary m-1"
+            onclick="showComplaintForm()"
+            id="raiseTicketBtn"
+          >
+            Raise a Ticket
+          </button>
+          <button
+            class="btn btn-primary mx-auto m-1"
+            id="historyCard"
+            onclick="showHistory()"
+          >
+            History
+          </button>
+          <button
+            type="button"
+            id="finalBackBtn1"
+            onclick="activeIssues()"
+            class="btn btn-primary mx-auto m-1"
+          >
+            Active Issues
+          </button>
+          <button class="btn btn-primary m-1" onclick="backToLogin()">
+            Log Out
+          </button>
+        </div>
+      </div>
+
+      <!-- Second Page: Complaint Form -->
+      <div class="container" id="complaint-page">
+        <h2>Issue Reporting</h2>
+        <form id="complaint-form">
+          <!-- <label for="staff-name">Staff Name:</label>
+        <input type="text" id="staff-name" name="staff-name" placeholder="Enter your name" required /> -->
+
+          <label for="Your issue">Your issue:</label>
+          <select id="Your issue" name="Your issue:" required>
+            <option value="" disabled selected>Select your Complaint</option>
+            <option value="NETWORK">NETWORK/SYSTEM ADMINISTRATION</option>
+            <option value="MAINTAINANCE" disabled>
+              MAINTAINANCE (Disabled)
+            </option>
+            <option value="ELECTRICIAN" disabled>ELECTRICAL (Disabled)</option>
+            <option value="WATER MANAGEMENT" disabled>
+              WATER MANAGEMENT (Disabled)
+            </option>
+            <option value="AIR CONDITIONER(AC)" disabled>
+              AIR CONDITIONER(AC) (Disabled)
+            </option>
+          </select>
+
+          <label for="department">Department:</label>
+          <select id="department" name="department" required>
+            <option value="" disabled selected>Select your department</option>
+            <option value="BASIC SCIENCE">BASIC SCIENCE</option>
+            <option value="CSE">CSE</option>
+            <option value="ECE">ECE</option>
+            <option value="IT">IT</option>
+            <option value="EEE">EEE</option>
+            <option value="AI&DS">AI & DS</option>
+            <option value="AI&ML">AI & ML</option>
+            <option value="CSBS">CSBS</option>
+            <option value="MECH">MECH</option>
+            <option value="CIVIL">CIVIL</option>
+          </select>
+
+          <!-- <label for="block-name">Block Name:</label>
+          <input
+            type="text"
+            id="block-name"
+            name="block-name"
+            placeholder="Enter block name"
+            required
+          /> -->
+
+          <label for="block-name">Block Name:</label>
+          <select id="block-name" name="block-name" required>
+            <option value="" disabled selected>Select the Block</option>
+            <option value="A Block">A Block</option>
+            <option value="B Block">B Block</option>
+            <option value="C Block">C Block</option>
+            <option value="D Block - COE">D Block - COE</option>
+            <option value="E Block - Library">E Block - Library</option>
+            <option value="F Block - (Workshop ATL/NI LABORATORY)">F Block - (Workshop ATL/NI LABORATORY)</option>
+            <option value="G Block - (EEE COMPUTER LAB,CS/PE LAB)">G Block - (EEE COMPUTER LAB,CS/PE LAB)</option>
+            <option value="H Block - (SKILLS HUB)">H Block - (SKILLS HUB)</option> 
+            </option>
+              F Block - Workshop ATL
+            </option>
+          </select>
+
+          <label for="room-number">Lab Name or Room Number:</label>
+          <input
+            type="text"
+            id="room-number"
+            name="room-number"
+            placeholder="Enter lab name or room number"
+            required
+          />
+
+          <label for="complaint">Complaint:</label>
+          <textarea
+            id="complaint"
+            name="complaint"
+            placeholder="Write your issue here..."
+            rows="4"
+            required
+          ></textarea>
+
+          <button type="submit" class="btn btn-primary" onclick="mainSubmit()">
+            Submit
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="gotoFinalFromLogin()"
+          >
+            Active Issues
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="backToHomePage()"
+          >
+            Back
+          </button>
+        </form>
+        <p id="confirmation-message"></p>
+        <button
+          class="btn btn-primary mb-2"
+          id="finalBackBtn"
+          onclick="backToFillForm()"
+        >
+          Back
+        </button>
+        <div id="complaints-container"></div>
+      </div>
+    </div>
+
+    <div class="history-container" id="history-container">
+      <h1 class="header">Previous Raised Issues</h1>
+      <button class="btn btn-primary mx-left" onclick="backFromHistory()">
+        Back
+      </button>
+      <div id="history-data-container"></div>
+    </div>
+
+    <!-- <footer>
+      <p class="text-center footer-para">
+        &copy; Vishnu Institute of Technology.<span class="text-primary"
+          >All rights reserved</span
+        >
+        for Drone Center of Excellence.
+      </p>
+    </footer> -->
+    <footer>
+      <p class="text-center footer-para">&copy;.<span class="text-primary">All rights reserved</span> for Vishnu Institute Of Technology.</p>
+      <p class="text-center footer-para font-weight-bold">Developed By Drone Centre Of Excellence.</p>
+  </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+
+    <script>
+      let username;
+      let department;
+      let blockName;
+      let roomNumber;
+      let complaint;
+      let otp;
+      let email;
+      // Firebase configuration object
+      const firebaseConfig = {
+          apiKey: "YOUR_API_KEY",
+          authDomain: "YOUR_AUTH_DOMAIN",
+          databaseURL: "YOUR_DATABASE_URL",
+          projectId: "YOUR_PROJECT_ID",
+          storageBucket: "YOUR_STORAGE_BUCKET",
+          messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+          appId: "YOUR_APP_ID",
+          measurementId: "YOUR_MEASUREMENT_ID",
+        };
+
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+      const database = firebase.database();
+
+      document.getElementById("finalBackBtn1").style.display = "none";
+
+      // Function to show the login form and hide the register form
+      function showLogin() {
+        document.getElementById("loginContainer").style.display = "block";
+        document.getElementById("registerContainer").style.display = "none";
+        document.getElementById("mainContainer").style.display = "none";
+        document.getElementById("history-container").style.display = "none";
+        document.getElementById("finalBackBtn").style.display = "none";
+        document.getElementById("forget_container").style.display = "none";
+      }
+
+      function verifyOtp() {
+        if (otp === document.getElementById("otpInput").value) {
+          console.log("Done");
+          document.getElementById("frgPass").style.display = "block";
+          document.getElementById("frgPassBtn").style.display = "block";
+          document.getElementById("verifyOtpBtn").style.display = "none";
+          document.getElementById("otpInput").style.display = "none";
+          document.getElementById("frgIcon").style.display = "none";
+          document.getElementById("otpErrTxt").textContent = "Otp is Correct";
+        } else {
+          document.getElementById("otpErrTxt").textContent = "Otp is Wrong";
+        }
+      }
+
+      function registeremailotpVerify() {
+        if (otp === document.getElementById("registeremailotp").value) {
+          console.log("Done");
+          document.getElementById("registerOtpErrText").textContent = "Done";
+
+          // document.getElementById("verifyOtpBtn").style.display = "none";
+          // document.getElementById("otpInput").style.display = "none";
+        } else {
+          document.getElementById("registerOtpErrText").textContent =
+            "Otp is Wrong";
+        }
+      }
+
+      document
+        .getElementById("togglePassword")
+        .addEventListener("click", function () {
+          const passwordField = document.getElementById("loginPassword");
+          const icon = this;
+
+          // Toggle the password visibility
+          if (passwordField.type === "password") {
+            passwordField.type = "text";
+            icon.classList.remove("bx-show");
+            icon.classList.add("bx-hide");
+          } else {
+            passwordField.type = "password";
+            icon.classList.remove("bx-hide");
+            icon.classList.add("bx-show");
+          }
+        });
+
+      document
+        .getElementById("togglePassword1")
+        .addEventListener("click", function () {
+          const passwordField = document.getElementById("registerPassword");
+          const icon = this;
+
+          // Toggle the password visibility
+          if (passwordField.type === "password") {
+            passwordField.type = "text";
+            icon.classList.remove("bx-show");
+            icon.classList.add("bx-hide");
+          } else {
+            passwordField.type = "password";
+            icon.classList.remove("bx-hide");
+            icon.classList.add("bx-show");
+          }
+        });
+
+      function newPass() {
+        let newPass = document.getElementById("newPass").value;
+        const userRef = database.ref("users/" + username);
+
+        userRef.once("value", (snapshot) => {
+          userRef.update({
+            password: newPass,
+          });
+        });
+
+        Swal.fire({
+          title:
+            "The Password is Changed Successfully.Please Refresh Your page.",
+          text: "............",
+          icon: "success",
+        });
+      }
+
+      // Function to show the register form and hide the login form
+      function showRegister() {
+        document.getElementById("registerContainer").style.display = "block";
+        document.getElementById("loginContainer").style.display = "none";
+        document.getElementById("mainContainer").style.display = "none";
+      }
+
+      // Initial setup to show the login form by default
+      document.addEventListener("DOMContentLoaded", function () {
+        showLogin();
+      });
+
+      // Function for user signup
+      function signup() {
+        username = document.getElementById("registerusername").value;
+        email = document.getElementById("email").value;
+        const phoneNumber = document.getElementById("registerNumber").value;
+        const password = document.getElementById("registerPassword").value;
+        const registeremailotp =
+          document.getElementById("registeremailotp").value;
+
+        // // const username = "21pa1a04f2@vishnu.edu.in";
+        // const parts = usernameInput.split("@");
+
+        // const username = parts[0]; // Part before '@'
+        // const afterAt = parts[1]; // Part after '@'
+
+        if (
+          !username ||
+          !password ||
+          !phoneNumber ||
+          !registeremailotp ||
+          !email
+        ) {
+          document.getElementById("registerMessage").innerText =
+            "Please check the Information!";
+          return;
+        }
+
+        if (
+          document.getElementById("registerOtpErrText").textContent === "Done"
+        ) {
+          const userRef = database.ref("users/" + username);
+
+          userRef.once("value", (snapshot) => {
+            if (snapshot.exists()) {
+              document.getElementById("registerMessage").innerText =
+                "username already exists. Please choose another.";
+            } else {
+              userRef.set({
+                password: password,
+                phonenumber: phoneNumber,
+                email: email,
+              });
+              document.getElementById("registerMessage").innerText =
+                "Signup successful!";
+              alert("Successfully Registered");
+            }
+          });
+        } else {
+          document.getElementById("registerMessage").innerText =
+            "Please check the Information!";
+          return;
+        }
+      }
+
+      function forgetOtpSender() {
+        username = document.getElementById("frInputusername").value;
+
+        const userRef = database.ref("users/" + username);
+        userRef
+          .once("value")
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const userData = snapshot.val();
+              email = userData.email;
+              console.log(email);
+              console.log(userData);
+              console.log("dfgads");
+
+              // Initialize EmailJS
+              emailjs.init("34Be9Xq_NerTx05MN"); // Replace with your user ID
+
+              // Generate OTP
+              otp = Array.from({ length: 6 }, () =>
+                Math.floor(Math.random() * 10)
+              ).join("");
+              console.log(`Your OTP is:${otp}`);
+
+              // Prepare template parameters
+              const templateParams = {
+                to_name: email,
+                from_name: "VNI",
+                message: `Your OTP is: ${otp}`,
+              };
+
+              const eID = "service_cdz88v1";
+              const tID = "template_auuqjcp";
+
+              // Send OTP via EmailJS
+              return emailjs.send(eID, tID, templateParams);
+            } else {
+              throw new Error("User not found");
+            }
+          })
+          .then((res) => {
+            Swal.fire({
+              title: "OTP Sent to " + email,
+              text: "............",
+              icon: "success",
+            });
+            console.log("success");
+          })
+          .catch((error) => {
+            console.error("Error sending OTP:", error);
+            Swal.fire({
+              title: "Error",
+              text: error.message,
+              icon: "error",
+            });
+          });
+      }
+
+      function otpSender() {
+        (function () {
+          emailjs.init("34Be9Xq_NerTx05MN"); // Replace with your user ID
+        })();
+
+        otp = Array.from({ length: 6 }, () =>
+          Math.floor(Math.random() * 10)
+        ).join("");
+
+        console.log(`Your OTP is:${otp}`);
+
+        var templateParams = {
+          to_name: document.getElementById("email").value,
+          from_name: "VNI",
+          message: `Your OTP is: ${otp}`,
+        };
+        //   var eID = "service_cdz88v1";
+        //   var tID = "template_auuqjcp";
+
+        var eID = "service_cdz88v1";
+        var tID = "template_auuqjcp";
+        // Send the username
+        emailjs
+          .send(eID, tID, templateParams)
+          .then((res) => {
+            Swal.fire({
+              title: "OTP Sent to " + document.getElementById("email").value,
+              text: "............",
+              icon: "success",
+            });
+            console.log("success");
+            //   document.getElementById("verify").style.display = "block";
+          })
+          .catch();
+      }
+
+      function forget() {
+        document.getElementById("forget_container").style.display = "block";
+        document.getElementById("frgPassBtn").style.display = "none";
+
+        document.getElementById("loginContainer").style.display = "none";
+        document.getElementById("frgPass").style.display = "none";
+      }
+
+      // Function for user login
+      function login() {
+        username = document.getElementById("loginusername").value;
+        const password = document.getElementById("loginPassword").value;
+
+        if (!username || !password) {
+          document.getElementById("loginMessage").innerText =
+            "Please enter both username and password.";
+          return;
+        }
+
+        const userRef = database.ref("users/" + username);
+
+        userRef.once("value", (snapshot) => {
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            if (userData.password === password) {
+              document.getElementById("loginusername").value = "";
+              document.getElementById("loginPassword").value = "";
+
+              const complaintsRef = database.ref("complaints/" + username);
+              complaintsRef.once("value", (complaintSnapshot) => {
+                if (complaintSnapshot.exists()) {
+                  gotoFinalFromLogin();
+                } else {
+                  gotoRaiseComplaintFromLogin();
+                }
+              });
+            } else {
+              document.getElementById("loginMessage").innerText =
+                "Incorrect password.";
+            }
+          } else {
+            document.getElementById("loginMessage").innerText =
+              "User not found.";
+          }
+        });
+      }
+
+      function gotoRaiseComplaintFromLogin() {
+        document.getElementById("formContainer").style.display = "none";
+        document.getElementById("complaint-page").style.display = "none";
+        document.getElementById("mainContainer").style.display = "block";
+        document.getElementById("home-page").style.display = "block";
+
+        if (username === "seeDetails") {
+          // document.getElementById("loginContainer").style.display = "block";
+          document.getElementById("complaint-form").style.display = "none";
+          document.getElementById("raiseTicketBtn").style.display = "none";
+          document.getElementById("historyCard").textContent = "Cleared Issues";
+
+          document.getElementById("finalBackBtn1").style.display = "block";
+        }
+      }
+
+      function gotoFinalFromLogin() {
+        document.getElementById("formContainer").style.display = "none";
+        document.getElementById("home-page").style.display = "none";
+        document.getElementById("complaint-form").style.display = "none";
+        document.getElementById("complaint-page").style.display = "block";
+        document.getElementById("mainContainer").style.display = "block";
+        document.getElementById("finalBackBtn").style.display = "block";
+        document.getElementById("complaints-container").style.display = "block";
+
+        displayUserComplaints(username);
+      }
+
+      function backToLogin() {
+        document.getElementById("mainContainer").style.display = "none";
+        document.getElementById("registerContainer").style.display = "none";
+        document.getElementById("loginContainer").style.display = "block";
+        document.getElementById("formContainer").style.display = "block";
+      }
+
+      function showComplaintForm() {
+        document.getElementById("home-page").style.display = "none";
+        document.getElementById("complaint-page").style.display = "block";
+      }
+
+      function backToHomePage() {
+        document.getElementById("home-page").style.display = "block";
+        document.getElementById("complaint-page").style.display = "none";
+      }
+
+      function backToFillForm() {
+        document.getElementById("complaints-container").style.display = "none";
+        document.getElementById("finalBackBtn").style.display = "none";
+        document.getElementById("complaint-form").style.display = "block";
+      }
+
+      document
+        .getElementById("complaint-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          document.getElementById("finalBackBtn").style.display = "block";
+          document.getElementById("complaints-container").style.display =
+            "block";
+          department = document.getElementById("department").value;
+          blockName = document.getElementById("block-name").value;
+          roomNumber = document.getElementById("room-number").value;
+          complaint = document.getElementById("complaint").value;
+
+          // Save data to Firebase
+          var newComplaintRef = database
+            .ref("complaints")
+            .child(username)
+            .push();
+
+          const currentDateTime = new Date();
+          const formattedDate = currentDateTime.toLocaleDateString(); // e.g., '9/7/2024'
+          const formattedTime = currentDateTime.toLocaleTimeString(); // e.g., '11:25:15 AM'
+
+          newComplaintRef
+            .set({
+              department: department,
+              block: blockName,
+              roomNumber: roomNumber,
+              complaint: complaint,
+              raisedTime: `Date: ${formattedDate}, Time: ${formattedTime}`,
+              closedTime: `Date: ${formattedDate}, Time: ${formattedTime}`,
+              username,
+              isChecked: false,
+              issueCleared: false,
+              noticeText: "",
+              feedback: false,
+            })
+            .then(() => {
+              // Display confirmation message
+              document.getElementById("department").value = "";
+              document.getElementById("block-name").value = "";
+              document.getElementById("room-number").value = "";
+              document.getElementById("complaint").value = "";
+              document.getElementById("complaint-form").style.display = "none";
+              displayUserComplaints(username);
+            })
+            .catch((error) => {
+              console.error("Error saving data: ", error);
+            });
+        });
+
+      function activeIssues() {
+        document.getElementById("formContainer").style.display = "none";
+        document.getElementById("mainContainer").style.display = "none";
+        document.getElementById("history-container").style.display = "block";
+        const dataContainer = document.getElementById("history-data-container");
+
+        // Reference to the 'history/navya' node
+        const ref = database.ref("history/" + username);
+
+        // Listen for changes to the data
+        ref.on("value", (snapshot) => {
+          const data = snapshot.val();
+          dataContainer.innerHTML = ""; // Clear existing data
+
+          if (data === null) {
+            dataContainer.innerHTML = "<p>No Active Issues available.</p>";
+          } else {
+            if (username === "seeDetails") {
+              database.ref("complaints").on("value", (snapshot) => {
+                const data = snapshot.val();
+                if (data === null) {
+                  dataContainer.innerHTML =
+                    "<p>No Active Issues available.</p>";
+                } else {
+                  for (const user in data) {
+                    //   console.log(User: ${user});
+                    for (const entry in data[user]) {
+                      // console.log(data[user][entry]);
+                      const item = data[user][entry];
+
+                      const blockDiv = document.createElement("div");
+                      blockDiv.classList.add("data-block");
+
+                      blockDiv.innerHTML = `
+                                    <p><strong>Staff Name:</strong> ${item.username}</p>
+                                    <p><strong>Block:</strong> ${item.block}</p>
+                                    <p><strong>Complaint:</strong> ${item.complaint}</p>
+                                    <p><strong>Department:</strong> ${item.department}</p>
+                                    <p><strong>Room Number:</strong> ${item.roomNumber}</p>
+                                    <p><strong>Raised Time:</strong> ${item.raisedTime}</p>
+                                `;
+
+                      dataContainer.appendChild(blockDiv);
+                    }
+                  }
+                }
+              });
+            }
+          }
+
+          // Check if data exists
+        });
+      }
+
+      function showHistory() {
+        document.getElementById("formContainer").style.display = "none";
+        document.getElementById("mainContainer").style.display = "none";
+        document.getElementById("history-container").style.display = "block";
+        const dataContainer = document.getElementById("history-data-container");
+
+        // Reference to the 'history/navya' node
+        const ref = database.ref("history/" + username);
+
+        // Listen for changes to the data
+        ref.on("value", (snapshot) => {
+          const data = snapshot.val();
+          dataContainer.innerHTML = ""; // Clear existing data
+
+          // Check if data exists
+          if (username === "seeDetails") {
+            // No data available
+            // dataContainer.innerHTML = "<p>No data available.</p>";
+
+            database.ref("history").on("value", (snapshot) => {
+              const data = snapshot.val();
+              if (data === null) {
+                dataContainer.innerHTML = "<p>No Data available.</p>";
+              } else {
+                for (const user in data) {
+                  //   console.log(User: ${user});
+                  for (const entry in data[user]) {
+                    // console.log(data[user][entry]);
+                    const item = data[user][entry];
+
+                    const blockDiv = document.createElement("div");
+                    blockDiv.classList.add("data-block");
+
+                    blockDiv.innerHTML = `
+                                    <p><strong>Staff Name:</strong> ${item.username}</p>
+                                    <p><strong>Block:</strong> ${item.block}</p>
+                                    <p><strong>Complaint:</strong> ${item.complaint}</p>
+                                    <p><strong>Department:</strong> ${item.department}</p>
+                                    <p><strong>Room Number:</strong> ${item.roomNumber}</p>
+                                    <p><strong>Raised Time:</strong> ${item.raisedTime}</p>
+                                    <p><strong>Closed Time:</strong> ${item.closedTime}</p>
+                                `;
+
+                    dataContainer.appendChild(blockDiv);
+                  }
+                }
+              }
+            });
+          } else {
+            // Loop through the data and create blocks
+            if (data === null) {
+              dataContainer.innerHTML = "<p>No Data available.</p>";
+            } else {
+              for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                  const item = data[key];
+
+                  // Create a div element for each data block
+                  const blockDiv = document.createElement("div");
+                  blockDiv.classList.add("data-block");
+
+                  // Add content to the div
+                  blockDiv.innerHTML = `
+                        <p><strong>Block:</strong> ${item.block}</p>
+                        <p><strong>Complaint:</strong> ${item.complaint}</p>
+                        <p><strong>Department:</strong> ${item.department}</p>
+                        <p><strong>Room Number:</strong> ${item.roomNumber}</p>
+                        <p><strong>Staff Name:</strong> ${item.username}</p>
+                        <p><strong>Raised Time:</strong> ${item.raisedTime}</p>
+                        <p><strong>Closed Time:</strong> ${item.closedTime}</p>
+                    `;
+
+                  // Append the block to the container
+                  dataContainer.appendChild(blockDiv);
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function backFromHistory() {
+        document.getElementById("formContainer").style.display = "none";
+        document.getElementById("mainContainer").style.display = "block";
+        document.getElementById("history-container").style.display = "none";
+      }
+
+      function displayUserComplaints(username) {
+        console.log(username);
+        var complaintsContainer = document.getElementById(
+          "complaints-container"
+        );
+        complaintsContainer.innerHTML = ""; // Clear previous content
+
+        database
+          .ref("complaints")
+          .child(username)
+          //   .off("value") // Remove any previous listeners to prevent duplicates
+          .on("value", function (snapshot) {
+            complaintsContainer.innerHTML = ""; // Clear the container again before populating
+
+            snapshot.forEach(function (childSnapshot) {
+              var complaintData = childSnapshot.val();
+
+              // Create a new container for each complaint
+              var complaintDiv = document.createElement("div");
+              complaintDiv.className = "complaint";
+
+              // Add complaint details with a feedback container
+              var complaintDetails = `
+                    <p><strong>Block:</strong> ${complaintData.block}</p>
+                    <p><strong>Room:</strong> ${complaintData.roomNumber}</p>
+                    <p><strong>Complaint:</strong> ${complaintData.complaint}</p>
+                    <p id="status-${childSnapshot.key}">Intimated to Technician</p>
+                    <p class="notictext" id="notice-text-${childSnapshot.key}"></p>
+                    <!-- Feedback container (hidden initially) -->
+                    <div class="feedback-container" id="feedback-container-${childSnapshot.key}" style="display: none;">
+                        <p>Was your issue resolved?</p>
+                        <button class="yes-button" onclick="handleFeedback(true, '${childSnapshot.key}', '${username}')">Yes</button>
+                        <button class="no-button" onclick="handleFeedback(false, '${childSnapshot.key}', '${username}')">No</button>
+                    </div>
+                `;
+
+              complaintDiv.innerHTML = complaintDetails;
+              complaintsContainer.appendChild(complaintDiv);
+
+              // Listen for changes in isChecked, issueCleared, and noticeText
+              childSnapshot.ref.on("value", (dataSnapshot) => {
+                var data = dataSnapshot.val();
+                var statusElement = document.getElementById(
+                  `status-${childSnapshot.key}`
+                );
+                var noticeElement = document.getElementById(
+                  `notice-text-${childSnapshot.key}`
+                );
+                var feedbackContainer = document.getElementById(
+                  `feedback-container-${childSnapshot.key}`
+                );
+
+                if (data.isChecked && !data.issueCleared) {
+                  statusElement.textContent = "Your issue is in progress.";
+                  statusElement.className = "in-progress";
+                }
+                if (data.issueCleared) {
+                  statusElement.textContent = "Your issue has been cleared!";
+                  statusElement.className = "finished";
+
+                  // Show feedback container
+                  feedbackContainer.style.display = "block";
+                }
+
+                // Update the notice text
+                noticeElement.textContent = data.noticeText || "";
+              });
+            });
+          });
+      }
+
+      function handleFeedback(isCleared, complaintId, username) {
+        var complaintRef = database
+          .ref("complaints")
+          .child(username)
+          .child(complaintId);
+
+        complaintRef
+          .once("value", (snapshot) => {
+            var complaintData = snapshot.val();
+
+            if (isCleared) {
+              // If the user clicks "Yes"
+              const currentDateTime = new Date();
+              const formattedDate = currentDateTime.toLocaleDateString(); // e.g., '9/7/2024'
+              const formattedTime = currentDateTime.toLocaleTimeString(); // e.g., '11:25:15 AM'
+
+              complaintRef
+                .update({
+                  issueCleared: true,
+                  feedback: true,
+                  closedTime: `Date: ${formattedDate}, Time: ${formattedTime}`,
+                })
+                .then(() => {
+                  // Move the complaint to the history folder
+                  var historyRef = database
+                    .ref("history")
+                    .child(username)
+                    .child(complaintId);
+                  historyRef.set(complaintData).then(() => {
+                    // Remove the complaint from the active complaints
+                    complaintRef.remove();
+                  });
+                });
+            } else {
+              // If the user clicks "No"
+              complaintRef.update({
+                isChecked: false,
+                issueCleared: false,
+              });
+            }
+          })
+          .then(() => {
+            // Refresh the complaints list after handling feedback
+            displayUserComplaints(username);
+          });
+      }
+    </script>
+  </body>
+</html>
